@@ -1,0 +1,24 @@
+import requests
+
+DEEPSEEK_API_KEY = "sk-e317db5ddeba4cd7aa530cd5e88eb1d5"
+
+def chat_with_deepseek(prompt):
+    url = "https://api.deepseek.ai/chat"
+    headers = {"Authorization": f"Bearer {DEEPSEEK_API_KEY}"}
+    data = {"model": "deepseek-llm", "messages": [{"role": "user", "content": prompt}]}
+    response = requests.post(url, json=data, headers=headers)
+    return response.json().get("choices")[0].get("message", {}).get("content", "No response.")
+
+def chatbot():
+    print("Welcome to DeepSeek Chatbot! Type 'exit' to quit.")
+    while True:
+        user_input = input("\nYou: ")
+        if user_input.lower() == "exit":
+            print("Goodbye!")
+            break
+        response = chat_with_deepseek(user_input)
+        print(f"\nBot: {response}")
+
+chatbot()
+
+
