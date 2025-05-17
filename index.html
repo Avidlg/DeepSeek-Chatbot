@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>DeepSeek Chat Bot</title>
+    <script>
+        async function sendMessage() {
+            let prompt = document.getElementById("message").value;
+            let response = await fetch("/chat", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({"prompt": prompt})
+            });
+            let data = await response.json();
+            document.getElementById("chatbox").innerHTML += `<p><b>You:</b> ${prompt}</p>`;
+            document.getElementById("chatbox").innerHTML += `<p><b>DeepSeek Chat Bot:</b> ${data.response}</p>`;
+        }
+    </script>
+</head>
+<body>
+    <h2>DeepSeek Chat Bot</h2>
+    <div id="chatbox"></div>
+    <input id="message" type="text" placeholder="Type your message...">
+    <button onclick="sendMessage()">Send</button>
+</body>
+</html>
